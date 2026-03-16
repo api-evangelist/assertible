@@ -1,36 +1,55 @@
 aid: assertible
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/assertible/refs/heads/main/apis.yml
-apis:
-  - aid: assertible:assertible
-    name: Assertible
-    tags:
-      - API
-    humanURL: https://assertible.com/
-    properties:
-      - url: https://assertible.com/
-        type: Documentation
-    description: >-
-      Assertible provides a reliable first line of defense against web service
-      failures by providing simple and powerful assertions to test and monitor
-      your APIs and ...
 name: Assertible
+description: >-
+  Assertible provides a reliable first line of defense against web service
+  failures by providing simple and powerful assertions to test and monitor APIs.
+  It enables automated API testing with assertions on response status, headers,
+  body content, and performance, with integrations for CI/CD pipelines and
+  notifications.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - Testing
   - Monitoring
   - Platform
   - Quality Assurance
-type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-access: 3rd-Party
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/assertible/refs/heads/main/apis.yml
 created: '2025-01-08'
-modified: '2025-01-13'
-position: ''
-description: >-
-  Assertible provides a reliable first line of defense against web service
-  failures by providing simple and powerful assertions to test and monitor your
-  APIs and ...
+modified: '2026-03-16'
+specificationVersion: '0.19'
+apis:
+  - aid: assertible:assertible-api
+    name: Assertible API
+    description: >-
+      The Assertible API enables programmatic management of API tests, test
+      suites, and monitoring configurations for automated quality assurance.
+    humanURL: https://assertible.com/
+    baseURL: https://api.assertible.com
+    tags:
+      - Testing
+      - Monitoring
+      - Quality Assurance
+    properties:
+      - type: Documentation
+        url: https://assertible.com/docs
+      - type: Getting Started
+        url: https://assertible.com/docs/guide/getting-started
+      - type: Authentication
+        url: https://assertible.com/docs/guide/authentication
+common:
+  - type: Website
+    url: https://assertible.com/
+  - type: Documentation
+    url: https://assertible.com/docs
+  - type: Blog
+    url: https://assertible.com/blog
+  - type: Sign Up
+    url: https://assertible.com/signup
+  - type: Login
+    url: https://assertible.com/login
+  - type: GitHub Organization
+    url: https://github.com/assertible
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
-specificationVersion: '0.19'
+    email: kin@apievangelist.com
