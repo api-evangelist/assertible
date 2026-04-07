@@ -9,10 +9,10 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Testing
   - Monitoring
   - Platform
   - Quality Assurance
+  - Testing
 url: >-
   https://raw.githubusercontent.com/api-evangelist/assertible/refs/heads/main/apis.yml
 created: '2025-01-08'
@@ -27,9 +27,9 @@ apis:
     humanURL: https://assertible.com/
     baseURL: https://api.assertible.com
     tags:
-      - Testing
       - Monitoring
       - Quality Assurance
+      - Testing
     properties:
       - type: Documentation
         url: https://assertible.com/docs
