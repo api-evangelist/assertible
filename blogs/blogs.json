@@ -4,10 +4,10 @@
     {
       "source": "https://assertible.com/blog",
       "feed_url": "https://assertible.com/blog/atom.xml",
-      "saved": 10,
-      "title": "The Assertible Blog"
+      "title": "The Assertible Blog",
+      "saved": 0
     }
   ],
   "post_count": 10,
-  "fetched": "2026-05-03T23:22:45Z"
+  "fetched": "2026-05-09T20:17:51Z"
 }
