@@ -44,6 +44,8 @@ apis:
       - type: Authentication
         url: https://assertible.com/docs/guide/authentication
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/assertible
   - type: Portal
     url: https://assertible.com/
     title: Assertible Website
