@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: Assertible API
+  version: "1.0"
+  description: |
+    Assertible provides automated API testing and monitoring. The Deployments
+    API enables CI/CD pipelines to trigger Assertible tests, attach
+    deployment metadata (service, version, environment) and optionally wait
+    for the test run to finish before responding.
+  contact:
+    name: Assertible
+    url: https://assertible.com
+servers:
+  - url: https://assertible.com
+    description: Assertible production API
+tags:
+  - name: Deployments
+    description: Notify Assertible of deployments and trigger tests
+paths:
+  /deployments:
+    post:
+      tags: [Deployments]
+      summary: Track a deployment and trigger its tests
+      description: |
+        Notifies Assertible that a deployment has occurred for the
+        identified web service. Triggers any deployment-targeted tests and
+        records the deployment ref/version for traceability.
+      security:
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeploymentRequest"
+      responses:
+        "200":
+          description: Deployment recorded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeploymentResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |
+        HTTP Basic auth where the username is the Assertible API token
+        (`ASSERTIBLE_API_TOKEN`) and the password is left empty.
+  schemas:
+    DeploymentRequest:
+      type: object
+      required: [service, version]
+      properties:
+        service:
+          type: string
+          format: uuid
+          description: ID of the web service in Assertible
+        version:
+          type: string
+          description: Application version identifier
+        environment:
+          type: string
+          default: production
+          description: Environment name (defaults to production)
+        environmentUrl:
+          type: string
+          format: uri
+          description: Override the service URL for this run
+        ref:
+          type: string
+          description: Source-control commit hash (required for GitHub integration)
+        url:
+          type: string
+          format: uri
+          description: External deployment details URL
+        github:
+          type: boolean
+          description: Whether to publish GitHub commit status checks
+        repository:
+          type: string
+          description: Specific GitHub repository (for multi-repo services)
+        tests:
+          type: array
+          description: Specific test IDs to execute
+          items:
+            type: string
+            format: uuid
+        testGroups:
+          type: array
+          description: Test groups to execute
+          items:
+            type: string
+        wait:
+          type: boolean
+          description: Wait for the test run to finish before responding
+    DeploymentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Deployment ID
+        runId:
+          type: string
+          description: Run ID
+        testRun:
+          type: object
+          description: Status of the triggered test run
