@@ -1,0 +1,38 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Assertible API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Track a deployment and trigger its tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://assertible.com/deployments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Notifies Assertible that a deployment has occurred for the\nidentified web service. Triggers any deployment-targeted tests and\nrecords the deployment ref/version for traceability.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

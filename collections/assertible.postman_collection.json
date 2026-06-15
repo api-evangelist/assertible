@@ -1,0 +1,237 @@
+{
+  "item": [
+    {
+      "id": "dd342787-1451-4b04-9f54-b87bb17f2ced",
+      "name": "Deployments",
+      "description": {
+        "content": "Notify Assertible of deployments and trigger tests",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f8dc75fe-17f8-4871-905a-12e903b9d25c",
+          "name": "Track a deployment and trigger its tests",
+          "request": {
+            "name": "Track a deployment and trigger its tests",
+            "description": {
+              "content": "Notifies Assertible that a deployment has occurred for the\nidentified web service. Triggers any deployment-targeted tests and\nrecords the deployment ref/version for traceability.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"service\": \"<uuid>\",\n  \"version\": \"<string>\",\n  \"environment\": \"production\",\n  \"environmentUrl\": \"<uri>\",\n  \"ref\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"github\": \"<boolean>\",\n  \"repository\": \"<string>\",\n  \"tests\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"testGroups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"wait\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d19ab4e-4007-4e9c-b69b-f495451ca952",
+              "name": "Deployment recorded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"service\": \"<uuid>\",\n  \"version\": \"<string>\",\n  \"environment\": \"production\",\n  \"environmentUrl\": \"<uri>\",\n  \"ref\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"github\": \"<boolean>\",\n  \"repository\": \"<string>\",\n  \"tests\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"testGroups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"wait\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"runId\": \"string\",\n  \"testRun\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b647ccbe-38c4-46d1-be32-cd5a51956465",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"service\": \"<uuid>\",\n  \"version\": \"<string>\",\n  \"environment\": \"production\",\n  \"environmentUrl\": \"<uri>\",\n  \"ref\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"github\": \"<boolean>\",\n  \"repository\": \"<string>\",\n  \"tests\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"testGroups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"wait\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0c00693c-70bd-4777-9c35-4192d9fe9d63",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"service\": \"<uuid>\",\n  \"version\": \"<string>\",\n  \"environment\": \"production\",\n  \"environmentUrl\": \"<uri>\",\n  \"ref\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"github\": \"<boolean>\",\n  \"repository\": \"<string>\",\n  \"tests\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"testGroups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"wait\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://assertible.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5206645b-b242-41e8-b5fc-05fdae9d57b3",
+    "name": "Assertible API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Assertible provides automated API testing and monitoring. The Deployments\nAPI enables CI/CD pipelines to trigger Assertible tests, attach\ndeployment metadata (service, version, environment) and optionally wait\nfor the test run to finish before responding.\n\n\nContact Support:\n Name: Assertible",
+      "type": "text/plain"
+    }
+  }
+}
