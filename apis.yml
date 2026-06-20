@@ -10,7 +10,7 @@ description: >-
   assurance workflows. The platform integrates with GitHub, Slack, PagerDuty,
   and other tools for seamless notification and incident management.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - API Testing
   - Monitoring
