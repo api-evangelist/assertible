@@ -55,7 +55,7 @@ common:
   - type: Blog
     url: https://assertible.com/blog
     title: Blog
-  - type: SignUp
+  - type: Signup
     url: https://assertible.com/signup
     title: Sign Up
   - type: Login
