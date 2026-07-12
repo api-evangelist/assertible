@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/assertible-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: |-
+    HTTP Basic auth where the username is the Assertible API token
+    (`ASSERTIBLE_API_TOKEN`) and the password is left empty.
+  sources:
+  - openapi/assertible-openapi.yml
