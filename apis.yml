@@ -44,6 +44,8 @@ apis:
       - type: Authentication
         url: https://assertible.com/docs/guide/authentication
 common:
+  - type: AgenticAccess
+    url: agentic-access/assertible-agentic-access.yml
   - type: DomainSecurity
     url: security/assertible-domain-security.yml
   - type: Authentication
