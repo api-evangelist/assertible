@@ -10,7 +10,20 @@ description: >-
   assurance workflows. The platform integrates with GitHub, Slack, PagerDuty,
   and other tools for seamless notification and incident management.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/assertible.png
 tags:
   - API Testing
   - Monitoring
@@ -23,26 +36,35 @@ specificationVersion: '0.19'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/assertible/refs/heads/main/apis.yml
 apis:
-  - aid: assertible:assertible-api
-    name: Assertible API
-    description: >-
-      The Assertible API enables programmatic management of API tests, test
-      suites, and monitoring configurations for automated quality assurance.
-      It allows triggering test runs, managing webhooks, and accessing test
-      results programmatically for CI/CD integration.
-    humanURL: https://assertible.com/
-    baseURL: https://api.assertible.com
-    tags:
-      - API Testing
-      - Monitoring
-      - Quality Assurance
-    properties:
-      - type: Documentation
-        url: https://assertible.com/docs
-      - type: GettingStarted
-        url: https://assertible.com/docs/guide/getting-started
-      - type: Authentication
-        url: https://assertible.com/docs/guide/authentication
+- aid: assertible:assertible-api
+  name: Assertible API
+  description: >-
+    The Assertible API enables programmatic management of API tests, test suites, and monitoring configurations
+    for automated quality assurance. It allows triggering test runs, managing webhooks, and accessing
+    test results programmatically for CI/CD integration.
+  humanURL: https://assertible.com/
+  baseURL: https://api.assertible.com
+  tags:
+  - API Testing
+  - Monitoring
+  - Quality Assurance
+  properties:
+  - type: Documentation
+    url: https://assertible.com/docs
+  - type: GettingStarted
+    url: https://assertible.com/docs/guide/getting-started
+  - type: Authentication
+    url: https://assertible.com/docs/guide/authentication
+- aid: assertible:assertible-deployments-api
+  name: Assertible Deployments API
+  description: Notify Assertible of deployments and trigger tests
+  humanURL: https://assertible.com/
+  baseURL: https://api.assertible.com
+  tags:
+  - Deployments
+  properties:
+  - type: OpenAPI
+    url: openapi/assertible-deployments-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/assertible-agentic-access.yml
