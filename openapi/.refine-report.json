@@ -1,0 +1,14 @@
+{
+  "provider": "assertible",
+  "sources": [
+    "assertible-deployments-api-openapi.yml"
+  ],
+  "outputs": [
+    "assertible-deployments-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
