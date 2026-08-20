@@ -61,6 +61,8 @@ apis:
   humanURL: https://assertible.com/
   baseURL: https://api.assertible.com
   tags:
+  - Deployment
+  tags_raw:
   - Deployments
   properties:
   - type: OpenAPI
