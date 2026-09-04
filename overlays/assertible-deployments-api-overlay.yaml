@@ -1,0 +1,86 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Assertible Deployments API
+  version: 1.0.0
+x-generated: '2026-09-04'
+x-method: derived
+x-source: openapi/assertible-deployments-api-openapi.yml
+x-extends: openapi/assertible-deployments-api-openapi.yml
+x-note: >-
+  Captures the enrichment pipeline's additions to the Assertible Deployments API
+  contract without mutating it: a stable operationId, the published request and
+  response examples from Assertible's own deployments guide, the error envelope
+  shape observed live on 2026-09-04, and the documented natural-key upsert
+  semantics of POST /deployments.
+actions:
+- target: $.paths['/deployments'].post
+  description: Add a stable operationId; the published contract carries none.
+  update:
+    operationId: createDeployment
+- target: $.paths['/deployments'].post
+  description: Record that a repeated POST with the same service/environment/version updates the same deployment.
+  update:
+    x-idempotency:
+      mechanism: natural-key-upsert
+      key:
+      - service
+      - environment
+      - version
+      documented: https://assertible.com/docs/guide/deployments
+      note: >-
+        "If the POST request is made twice, the deployment is updated. A unique
+        deployment is represented by the service, environment name, and version
+        combination." No client-supplied Idempotency-Key header is offered.
+- target: $.paths['/deployments'].post.responses['200'].content['application/json']
+  description: Add the response example published in the deployments guide.
+  update:
+    examples:
+      created:
+        summary: Deployment recorded and test run triggered
+        value:
+          id: caacafdc-8ddc-4245-a0f4-f6715c5d9478
+          runId: abcd1234
+          testRun:
+            status: TestRunPending
+      githubDeployment:
+        summary: GitHub deployment (status checks propagated, no inline test run)
+        value:
+          id: caacafdc-8ddc-4245-a0f4-f6715c5d9478
+          runId: null
+          testRun: null
+- target: $.paths['/deployments'].post.responses['400']
+  description: Attach the Assertible error envelope and its published example to the 400 response.
+  update:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+        examples:
+          invalidRequest:
+            value:
+              code: InvalidRequestError
+              message: |
+                Cannot parse request body
+                "Error in $: key \"service\" not present"
+- target: $.paths['/deployments'].post.responses['401']
+  description: Attach the error envelope observed live on an unauthenticated POST.
+  update:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+        examples:
+          notLoggedIn:
+            value:
+              code: AuthenticationError
+              message: Not logged in

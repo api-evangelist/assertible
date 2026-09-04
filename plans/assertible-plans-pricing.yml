@@ -3,149 +3,205 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Assertible
 providerId: assertible
+generated: '2026-09-04'
+method: searched
+source: https://assertible.com/plans
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-04'
+# 2026-09-04: this file previously held a bulk-sweep SCAFFOLD (invented
+# Free/Professional/Enterprise tiers with "TBD" prices and invented monthly
+# request quotas). It has been replaced in full with the four tiers Assertible
+# actually publishes on https://assertible.com/plans, read from the pricing
+# table on 2026-09-04. No value below is inferred.
 tags:
   - API Testing
   - Monitoring
   - Quality Assurance
   - Testing
   - CI/CD
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: >-
+  Assertible publishes four self-serve plans on a single public pricing page.
+  Tiers are differentiated by product capacity — number of web services, tests
+  per service, retained test results, team members and monitoring schedule
+  frequency — not by API call volume. Assertible states explicitly that it does
+  not cap request counts.
+currency: USD
+billing_period: month
+plan_count: 4
+metering_basis: capacity
+metering_note: >-
+  From the pricing FAQ: "Do you have request limits per month? Instead of
+  limiting the number of requests you can make, limits are placed on the number
+  of results you can see for those requests, the number of tests you can create,
+  how frequently you can run schedules, etc."
 plans:
-  - id: assertible-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Assertible API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+  - id: assertible-personal
+    name: Personal
+    type: free
+    price: '0.00'
+    currency: USD
+    billing_period: month
+    description: >-
+      Free tier for an individual. Assertible's FAQ states it can be used free
+      "Forever".
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
+      - label: Web services
+        name: web_services
         type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.assertible.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
+        metric: web_services
+        limit: 2
+      - label: Tests per service
+        name: tests_per_service
+        type: quota
+        metric: tests
         limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.assertible.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Assertible API
-  - id: assertible-pro
-    name: Professional
-    type: paid
-    description: Production tier for Assertible. Provides higher quotas, priority support, and access
-      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
+      - label: Result retention
+        name: result_retention
         type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.assertible.com
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.assertible.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.assertible.com
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Assertible API
-  - id: assertible-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Assertible. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://api.assertible.com
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
+        metric: retained_results
         limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://api.assertible.com
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Assertible API
+      - label: Members
+        name: members
+        type: quota
+        metric: members
+        limit: 2
+        note: Published as "1-2".
+      - label: Schedule frequency
+        name: schedule_frequency
+        type: feature
+        value: Standard (2 monitors)
+        note: >-
+          Schedules of once per minute, once per 5 minutes and once per 15
+          minutes are documented as available only on paid plans; once per 30
+          minutes, hourly and daily are available on all plans.
+          Source https://assertible.com/docs/guide/automation#schedules
+  - id: assertible-standard
+    name: Standard
+    type: paid
+    price: '25.00'
+    currency: USD
+    billing_period: month
+    trial: 1 month free trial
+    description: >-
+      Keep tabs on your API and web applications with enhanced monitoring and
+      higher result retention.
+    entries:
+      - label: Web services
+        name: web_services
+        type: quota
+        metric: web_services
+        limit: 25
+      - label: Tests per service
+        name: tests_per_service
+        type: quota
+        metric: tests
+        limit: 500
+      - label: Result retention
+        name: result_retention
+        type: quota
+        metric: retained_results
+        limit: 5000
+      - label: Members
+        name: members
+        type: quota
+        metric: members
+        limit: 1
+      - label: Schedule frequency
+        name: schedule_frequency
+        type: feature
+        value: Upgraded
+  - id: assertible-startup
+    name: Startup
+    type: paid
+    price: '50.00'
+    currency: USD
+    billing_period: month
+    trial: 1 month free trial
+    description: >-
+      Add team members from your organization to collaborate on API testing and
+      monitoring your web services.
+    entries:
+      - label: Web services
+        name: web_services
+        type: quota
+        metric: web_services
+        limit: 25
+      - label: Tests per service
+        name: tests_per_service
+        type: quota
+        metric: tests
+        limit: 500
+      - label: Result retention
+        name: result_retention
+        type: quota
+        metric: retained_results
+        limit: 5000
+      - label: Members
+        name: members
+        type: quota
+        metric: members
+        limit: 10
+      - label: Schedule frequency
+        name: schedule_frequency
+        type: feature
+        value: Upgraded
+  - id: assertible-business
+    name: Business
+    type: paid
+    price: '100.00'
+    currency: USD
+    billing_period: month
+    trial: 1 month free trial
+    description: >-
+      Work across your organization to build a robust testing and QA pipeline for
+      your most critical web services.
+    entries:
+      - label: Web services
+        name: web_services
+        type: quota
+        metric: web_services
+        limit: 50
+      - label: Tests per service
+        name: tests_per_service
+        type: quota
+        metric: tests
+        limit: 1000
+      - label: Result retention
+        name: result_retention
+        type: quota
+        metric: retained_results
+        limit: 10000
+      - label: Members
+        name: members
+        type: quota
+        metric: members
+        limit: 20
+      - label: Schedule frequency
+        name: schedule_frequency
+        type: feature
+        value: Upgraded
+commercial_terms:
+  per_user_fees: false
+  per_user_note: >-
+    "No, there is only one monthly charge per account. Each plan has a limited
+    number of members you can invite."
+  proration: true
+  proration_note: >-
+    "When you upgrade or downgrade your account, all charges are automatically
+    pro-rated."
+  cancel_anytime: true
+  payment_methods:
+    - Visa
+    - MasterCard
+    - American Express
+    - Discover
+  payment_methods_excluded:
+    - PayPal
+    - Purchase order invoices
+  enterprise_contact: >-
+    No published enterprise tier. The FAQ directs customers needing higher limits
+    to "reach out and let us know - we can get you set up."
+  source: https://assertible.com/plans
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

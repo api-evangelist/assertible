@@ -1,0 +1,60 @@
+generated: '2026-09-04'
+method: searched
+source: https://assertible.com/blog/atom.xml
+provider: Assertible
+providerId: assertible
+dedicated_changelog: false
+found: false
+detail: >-
+  Assertible publishes no dated changelog, release-notes page or versions page.
+  https://assertible.com/changelog returns 404 (probed 2026-09-04). Product
+  changes were communicated as "New feature:" posts on the company blog, which
+  exposes an Atom feed. Those posts are recorded below as the closest published
+  release history, but this record deliberately carries NO ChangeLog pointer in
+  apis.yml, because a blog is not a changelog and asserting one would credit
+  Assertible with a surface it does not publish.
+scheme: none
+current_version: null
+feed: https://assertible.com/blog/atom.xml
+entries:
+- date: '2020-05-26'
+  title: Tips for importing and testing your API spec with Assertible
+  type: guidance
+  url: https://assertible.com/blog/tips-for-importing-and-testing-your-api-spec-with-assertible
+- date: '2019-10-30'
+  title: 'New feature: Encrypted variables'
+  type: addition
+  breaking: false
+  url: https://assertible.com/blog/new-feature-encrypted-variables
+- date: '2019-05-17'
+  title: 'New feature: Smarter notifications'
+  type: addition
+  breaking: false
+  url: https://assertible.com/blog/new-feature-smarter-notifications
+- date: '2019-02-20'
+  title: 'New feature: manipulate variables using jq'
+  type: addition
+  breaking: false
+  url: https://assertible.com/blog/new-feature-manipulate-variables-using-jq
+- date: '2019-02-11'
+  title: Sync changes from OpenAPI/Swagger specifications with Assertible API tests
+  type: addition
+  breaking: false
+  url: https://assertible.com/blog/sync-changes-from-openapi-swagger-specifications-with-assertible-api-tests
+- date: '2018-11-13'
+  title: Automatically import OpenAPI v3 response json schema assertions
+  type: addition
+  breaking: false
+  url: https://assertible.com/blog/automatically-import-openapi-v3-response-json-schema-assertions
+- date: '2018-10-22'
+  title: 'New feature: Integrate with PagerDuty'
+  type: addition
+  breaking: false
+  url: https://assertible.com/blog/new-feature-assertible-pagerduty-incidents-integration
+- date: '2018-10-19'
+  title: 'New feature: Editor support for testing GraphQL APIs'
+  type: addition
+  breaking: false
+  url: https://assertible.com/blog/new-feature-support-for-testing-graphql-apis
+breaking_changes_recorded: 0
+window: 2018-08-20 to 2020-05-26

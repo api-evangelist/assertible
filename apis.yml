@@ -44,7 +44,7 @@ tags:
   - Testing
   - CI/CD
 created: '2025-01-08'
-modified: '2026-04-19'
+modified: '2026-09-04'
 specificationVersion: '0.23'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/assertible/refs/heads/main/apis.yml
@@ -52,11 +52,18 @@ apis:
 - aid: assertible:assertible-api
   name: Assertible API
   description: >-
-    The Assertible API enables programmatic management of API tests, test suites, and monitoring configurations
-    for automated quality assurance. It allows triggering test runs, managing webhooks, and accessing
-    test results programmatically for CI/CD integration.
+    Assertible's public programmatic surface, used to drive test runs from a
+    CI/CD pipeline. It consists of two documented POST operations on
+    assertible.com: a trigger URL that runs a web service's tests
+    (POST /apis/{serviceId}/run) and a sync call that re-imports an OpenAPI,
+    Swagger or Postman specification and updates the tests derived from it
+    (POST /imports/{importId}/sync). Both authenticate with HTTP Basic using an
+    Assertible API token as the username. There are no read operations: web
+    services, tests, imports, environments, schedules and alert hooks are created
+    and listed in the dashboard only. Assertible's own /docs/api page states the
+    broader API is "under construction".
   humanURL: https://assertible.com/
-  baseURL: https://api.assertible.com
+  baseURL: https://assertible.com
   tags:
   - API Testing
   - Monitoring
@@ -65,14 +72,24 @@ apis:
   - type: Documentation
     url: https://assertible.com/docs
   - type: GettingStarted
-    url: https://assertible.com/docs/guide/getting-started
-  - type: Authentication
-    url: https://assertible.com/docs/guide/authentication
+    url: https://assertible.com/docs/guide/web-services
+    title: Quick start - create your web service
+  - type: APIReference
+    url: https://assertible.com/docs/guide/deployments
+    title: Deployments API parameter reference
+  - type: OpenAPI
+    url: openapi/assertible-triggers-api-openapi.yml
+  - type: OpenAPI
+    url: openapi/assertible-sync-api-openapi.yml
+  - type: Overlay
+    url: overlays/assertible-triggers-api-overlay.yaml
+  - type: Overlay
+    url: overlays/assertible-sync-api-overlay.yaml
 - aid: assertible:assertible-deployments-api
   name: Assertible Deployments API
   description: Notify Assertible of deployments and trigger tests
   humanURL: https://assertible.com/
-  baseURL: https://api.assertible.com
+  baseURL: https://assertible.com
   tags:
   - Deployment
   tags_raw:
@@ -80,13 +97,60 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/assertible-deployments-api-openapi.yml
+  - type: Overlay
+    url: overlays/assertible-deployments-api-overlay.yaml
+  - type: Documentation
+    url: https://assertible.com/docs/guide/deployments
+    title: Tracking deployments
 common:
+  - type: Website
+    url: https://assertible.com/
   - type: AgenticAccess
     url: agentic-access/assertible-agentic-access.yml
   - type: DomainSecurity
     url: security/assertible-domain-security.yml
   - type: Authentication
     url: authentication/assertible-authentication.yml
+  - type: Conventions
+    url: conventions/assertible-conventions.yml
+  - type: Idempotency
+    url: conventions/assertible-conventions.yml
+    title: Idempotency and reversibility semantics
+  - type: ErrorCatalog
+    url: errors/assertible-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/assertible-lifecycle.yml
+  - type: StatusPage
+    url: http://status.assertible.com
+    title: Assertible Status
+  - type: Conformance
+    url: conformance/assertible-conformance.yml
+  - type: DataModel
+    url: data-model/assertible-data-model.yml
+  - type: Packages
+    url: packages/assertible-packages.yml
+  - type: LLMsTxt
+    url: llms/assertible-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: X-MCPServerCandidate
+    url: mcp/assertible-mcp.yml
+  - type: Plans
+    url: plans/assertible-plans-pricing.yml
+  - type: Pricing
+    url: https://assertible.com/plans
+    title: Plans and Pricing
+  - type: TermsOfService
+    url: https://assertible.com/termsofservice
+    title: Terms of Service
+  - type: PrivacyPolicy
+    url: https://assertible.com/privacypolicy
+    title: Privacy Policy
+  - type: Support
+    url: https://assertible.com/contact
+    title: Contact Assertible
+  - type: Twitter
+    url: https://twitter.com/AssertibleApp
   - type: LinkedIn
     url: https://www.linkedin.com/company/assertible
   - type: Portal
@@ -98,7 +162,7 @@ common:
   - type: Blog
     url: https://assertible.com/blog
     title: Blog
-  - type: Signup
+  - type: SignUp
     url: https://assertible.com/signup
     title: Sign Up
   - type: Login
@@ -165,3 +229,8 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 19
+  pass: local-v3

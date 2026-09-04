@@ -1,0 +1,73 @@
+generated: '2026-09-04'
+method: searched
+source: https://assertible.com/docs
+provider: Assertible
+providerId: assertible
+versioning:
+  scheme: none
+  detail: >-
+    Assertible publishes no API versioning policy. Paths carry no version segment
+    and no version header or media type is documented.
+  source: https://assertible.com/docs/guide/deployments
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  detail: >-
+    No deprecation policy, no Sunset or Deprecation response headers documented
+    or observed, and no deprecated operations in any spec in this repo.
+  probed: '2026-09-04'
+status_page:
+  published: true
+  url: http://status.assertible.com
+  https_url: https://status.assertible.com
+  http_status: 200
+  vendor: self-hosted
+  machine_readable_feed: false
+  detail: >-
+    A first-party status page is linked from the docs footer and answers 200 over
+    both http and https. It exposes no Statuspage-style summary.json and no
+    history.atom (both 404 on 2026-09-04), so incident history is not
+    machine-readable.
+  probed: '2026-09-04'
+sla:
+  published: false
+  detail: >-
+    No SLA or uptime commitment is published on the plans page or in the docs.
+    The plans page differentiates tiers by web services, tests per service,
+    result retention, members and schedule frequency — not by availability.
+  source: https://assertible.com/plans
+support:
+  channels:
+  - type: contact-form
+    url: https://assertible.com/contact
+  - type: email
+    detail: Documented as the support route for the PagerDuty integration.
+release_communication:
+  dedicated_changelog: false
+  blog: https://assertible.com/blog
+  feed: https://assertible.com/blog/atom.xml
+  detail: >-
+    Feature releases were announced as "New feature:" blog posts. The Atom feed
+    carries 10 entries; the most recent is dated 2020-05-26 and the most recent
+    "New feature" post is 2019-10-30.
+  see: changelog/assertible-changelog.yml
+maturity_signals:
+- signal: last_public_release_communication
+  value: '2020-05-26'
+  source: https://assertible.com/blog/atom.xml
+  note: >-
+    Public release communication has been dormant for over five years. This is a
+    maturity/decay observation, not a claim the service is discontinued.
+- signal: api_docs_under_construction
+  value: 'https://assertible.com/docs/api reads "Our api is under construction right now."'
+  source: https://assertible.com/docs/api
+  probed: '2026-09-04'
+- signal: service_live
+  value: >-
+    All three documented API operations answered 401 AuthenticationError to
+    unauthenticated POSTs on 2026-09-04, and the marketing, docs, plans, signup,
+    login and status pages all returned 200.
+  probed: '2026-09-04'
+deprecated_operations: []

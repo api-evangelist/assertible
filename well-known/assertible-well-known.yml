@@ -1,0 +1,132 @@
+generated: '2026-09-04'
+method: probed
+source: live probes of every host this record knows
+provider: Assertible
+providerId: assertible
+summary:
+  hosts_probed: 4
+  documents_probed: 36
+  documents_found: 0
+  note: >-
+    Every /.well-known/ path returned 404 on every host. assertible.com answers
+    with a genuine JSON 404 envelope ({"code":"NotFoundError"}), not an SPA
+    shell, so these are true absences rather than a catch-all masking a
+    document. No WellKnown or SecurityTxt pointer is emitted in apis.yml, because
+    there is nothing served to point at.
+hosts:
+- host: assertible.com
+  note: Registrable domain, the marketing/docs host AND the API host.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 404
+    file: null
+- host: www.assertible.com
+  note: Redirects to assertible.com; probed independently.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 404
+    file: null
+- host: status.assertible.com
+  note: First-party status page.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 404
+    file: null
+- host: oauth2.assertible.com
+  note: >-
+    First-party OAuth 2.0 token generator app, referenced from the auth guide as
+    a helper for creating tokens against a THIRD-PARTY API under test. It is not
+    an authorization server for Assertible's own API.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 404
+    file: null
+not_probed:
+- host: api.assertible.com
+  reason: >-
+    NXDOMAIN. The host named as baseURL in this record does not resolve
+    (checked 2026-09-04); it has been corrected to assertible.com.

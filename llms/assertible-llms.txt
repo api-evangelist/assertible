@@ -1,0 +1,95 @@
+# Assertible
+
+> Assertible is a hosted API testing and monitoring service. You register a "web
+> service", create tests with assertions on status, headers, body content, JSON
+> Schema and response time, and Assertible runs them on a schedule, after a
+> deployment, or on demand. Its public programmatic surface is three POST
+> operations used to drive test runs from CI/CD.
+
+Generated 2026-09-04 by the API Evangelist enrichment pipeline from the
+apis.yml record at https://github.com/api-evangelist/assertible and from
+Assertible's own published documentation. Assertible does not publish an
+llms.txt of its own (https://assertible.com/llms.txt returned 404 on
+2026-09-04).
+
+## Base facts
+
+- Website: https://assertible.com/
+- API host: https://assertible.com (NOT api.assertible.com, which does not
+  resolve)
+- Auth: HTTP Basic — API token as the username, empty password
+- Errors: `{"code": "...", "message": "..."}` as application/json
+- Status: http://status.assertible.com
+- No OpenAPI, no GraphQL, no MCP server, no agent card, no webhooks out, no
+  SDKs. https://assertible.com/docs/api reads "Our api is under construction
+  right now."
+
+## API operations
+
+- POST https://assertible.com/deployments — record a deployment and trigger its
+  tests. Required: `service` (web service UUID), `version`. Optional:
+  `environment`, `environmentUrl`, `ref`, `url`, `github`, `repository`,
+  `tests[]`, `testGroups[]`, `wait`. Docs:
+  https://assertible.com/docs/guide/deployments
+- POST https://assertible.com/apis/{serviceId}/run — trigger URL; run a web
+  service's tests. Optional: `environment`, `endpoint`, `url`, `wait`, `tests[]`,
+  or `api_token` as a query parameter. Docs:
+  https://assertible.com/docs/guide/automation#trigger-urls
+- POST https://assertible.com/imports/{importId}/sync — re-import a spec and
+  create or update its tests. Optional: `tests[]`. Docs:
+  https://assertible.com/docs/guide/sync
+
+There are no read operations. Web service ids, test ids and import ids must be
+copied out of the Assertible dashboard; they cannot be listed over the API.
+
+## Runtime semantics an agent needs
+
+- Retry safety: POST /deployments is a natural-key upsert on
+  service+environment+version. POST /imports/{id}/sync matches tests on a
+  deterministic key. POST /apis/{id}/run is NOT idempotent — every call starts
+  another run.
+- Reversal: none. No cancel, delete, undo or rollback on any operation, and no
+  stated window. No dry-run mode.
+- Rate limits: none published, no rate-limit headers returned. Plan limits are
+  on capacity (web services, tests, retained results, members, schedule
+  frequency), not on request volume.
+
+## Documentation
+
+- Docs home: https://assertible.com/docs
+- Creating web services: https://assertible.com/docs/guide/web-services
+- Configuring tests: https://assertible.com/docs/guide/tests
+- Making assertions: https://assertible.com/docs/guide/assertions
+- JSON path syntax: https://assertible.com/docs/guide/json-path
+- Viewing test results: https://assertible.com/docs/guide/test-results
+- Tracking deployments: https://assertible.com/docs/guide/deployments
+- Syncing specifications: https://assertible.com/docs/guide/sync
+- Automation and integrations: https://assertible.com/docs/guide/automation
+- Auth types for the service UNDER TEST (not Assertible's own API auth):
+  https://assertible.com/docs/guide/auth
+- Working with organizations: https://assertible.com/docs/guide/organizations
+
+## Product
+
+- Plans and pricing: https://assertible.com/plans — Personal free, Standard
+  $25/mo, Startup $50/mo, Business $100/mo
+- Sign up: https://assertible.com/signup
+- Sign in: https://assertible.com/login
+- Terms of service: https://assertible.com/termsofservice
+- Privacy policy: https://assertible.com/privacypolicy
+- Contact: https://assertible.com/contact
+- Blog: https://assertible.com/blog (Atom: https://assertible.com/blog/atom.xml)
+- GitHub: https://github.com/assertible
+- CI/CD examples: https://github.com/assertible/deployments
+
+## Integrations
+
+GitHub deployments and status checks, Slack, PagerDuty, Zapier, and email hooks.
+Assertible receives GitHub deployment webhooks; it does not send generic
+outbound webhooks to a customer URL.
+
+## What it consumes
+
+OpenAPI 2.0/3.x and Postman Collections (import and sync), JSON Schema
+assertions, JSON Path, and — for the service under test — Basic, Digest, API
+token, OAuth 1.0a, OAuth 2.0 and session/cookie auth.

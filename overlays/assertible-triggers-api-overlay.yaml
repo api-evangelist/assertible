@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Assertible Triggers API
+  version: 1.0.0
+x-generated: '2026-09-04'
+x-method: derived
+x-source: openapi/assertible-triggers-api-openapi.yml
+x-extends: openapi/assertible-triggers-api-openapi.yml
+x-note: >-
+  Records the agent-relevant runtime semantics of the trigger URL surface that the
+  documentation states in prose rather than in the parameter table.
+actions:
+- target: $.paths['/apis/{serviceId}/run'].post
+  description: Record that the trigger surface is a read-only-to-the-caller execution trigger with no reversal operation.
+  update:
+    x-reversibility:
+      reversal: none
+      note: >-
+        Assertible documents no operation to cancel, stop or roll back a running
+        test run. A triggered run executes against the caller's own web service.
+- target: $.paths['/apis/{serviceId}/run'].post
+  description: Record Assertible's own published guidance preferring the Deployments API in CD pipelines.
+  update:
+    x-guidance: >-
+      Assertible recommends the Deployments API (POST /deployments) over trigger
+      URLs when running tests after a release in a continuous-delivery pipeline.

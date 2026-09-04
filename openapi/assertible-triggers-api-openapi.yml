@@ -1,0 +1,183 @@
+openapi: 3.1.0
+info:
+  title: Assertible Triggers API
+  version: '1.0'
+  description: |
+    Trigger URLs let a caller run an Assertible web service's tests from
+    outside the Assertible dashboard — from a CI pipeline, a deploy hook, or
+    any script. Every web service and every individual test has a trigger URL
+    of the form `POST /apis/{serviceId}/run`. Parameters may be supplied in a
+    JSON request body or as query-string parameters.
+  contact:
+    name: Assertible
+    url: https://assertible.com/contact
+  termsOfService: https://assertible.com/termsofservice
+x-generated-from: documentation
+x-generated-by: API Evangelist enrichment pipeline (local-v3)
+x-source-url: https://assertible.com/docs/guide/automation#trigger-urls
+x-evidence:
+  fetched: '2026-09-04'
+  probe: POST https://assertible.com/apis/00000000-0000-0000-0000-000000000000/run
+  http_status: 401
+  body: '{"code":"AuthenticationError","message":"Not logged in"}'
+  note: >-
+    Path, method, auth scheme, parameter names, types, requiredness and defaults
+    are transcribed verbatim from Assertible's published "Trigger URL Parameters"
+    table and its published curl examples. The endpoint was probed unauthenticated
+    on 2026-09-04 and returned 401 AuthenticationError, confirming it is live.
+    Assertible publishes no machine-readable spec for this surface.
+servers:
+- url: https://assertible.com
+  description: Assertible production API
+tags:
+- name: Triggers
+  description: Run a web service's tests on demand from outside the dashboard
+paths:
+  /apis/{serviceId}/run:
+    post:
+      tags:
+      - Triggers
+      operationId: runWebServiceTests
+      summary: Run the tests for a web service
+      description: |
+        Executes the tests belonging to the identified Assertible web service.
+        Parameters may be sent as a JSON body or as query-string parameters.
+        Returns immediately unless `wait` is true, in which case the response is
+        held until every test in the run has completed.
+      security:
+      - basicAuth: []
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        description: The Assertible web service (API) id, found on the service Settings tab.
+        schema:
+          type: string
+          format: uuid
+      - name: api_token
+        in: query
+        required: false
+        description: >-
+          Your API access token. Documented as an alternative to HTTP Basic for
+          contexts where a request body or auth header is inconvenient (for
+          example a Heroku deploy hook URL).
+        schema:
+          type: string
+      - name: environment
+        in: query
+        required: false
+        description: Run tests against a named environment configured in the dashboard.
+        schema:
+          type: string
+          default: production
+      - name: endpoint
+        in: query
+        required: false
+        description: Run only the tests belonging to a specific endpoint.
+        schema:
+          type: string
+      - name: url
+        in: query
+        required: false
+        description: Run tests against a specific URL (a transient environment).
+        schema:
+          type: string
+      - name: wait
+        in: query
+        required: false
+        description: Wait for all tests in the run to complete before responding.
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerRunRequest'
+            examples:
+              namedEnvironment:
+                summary: Run tests against the staging environment
+                value:
+                  environment: staging
+              transientEnvironment:
+                summary: Run tests against a dynamic URL
+                value:
+                  environment: my-dynamic-environment-xyz
+                  url: xyz.staging.megacorp.com/api/
+              specificTests:
+                summary: Run only named tests and wait for the result
+                value:
+                  tests:
+                  - be6df68d-e32f-47c5-bf6f-b1c208182b6f
+                  - f0ca8862-3d29-4b57-910f-efa222dd9aa0
+                  wait: true
+      responses:
+        '200':
+          description: Test run accepted (or completed, when `wait` is true)
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized — missing or invalid API token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                notLoggedIn:
+                  value:
+                    code: AuthenticationError
+                    message: Not logged in
+        '404':
+          description: Web service not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    TriggerRunRequest:
+      type: object
+      description: Trigger URL parameters, as documented in the Trigger URL Parameters table.
+      properties:
+        environment:
+          type: string
+          default: production
+          description: Named environment to run against.
+        endpoint:
+          type: string
+          description: Run tests belonging to a specific endpoint.
+        url:
+          type: string
+          description: Run tests against a specific URL (transient environment).
+        wait:
+          type: boolean
+          default: false
+          description: Hold the response until the test run completes.
+        tests:
+          type: array
+          description: >-
+            Test ids to run. Only valid for API (web service) trigger URLs. When
+            supplied, only the listed tests are run.
+          items:
+            type: string
+            format: uuid
+    Error:
+      type: object
+      description: The Assertible error envelope.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |
+        HTTP Basic auth where the username is the Assertible API token
+        (`ASSERTIBLE_API_TOKEN`) and the password is left empty.

@@ -1,0 +1,116 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, rubygems.org, crates.io, packagist.org,
+  hackage.haskell.org, api.github.com/orgs/assertible
+provider: Assertible
+providerId: assertible
+description: >-
+  Assertible publishes NO first-party client SDK on any package registry. Its
+  documented integration path is a raw curl call, and its GitHub organization
+  ships worked CI/CD example repositories rather than libraries. Registries
+  searched 2026-09-04.
+official_sdk_count: 0
+registries_searched:
+- registry: npm
+  query: assertible
+  result: >-
+    No Assertible-published client library. `assertible@0.0.1` is an unrelated
+    runtime assertion library by mtronix. `assertible-to-junit@1.0.0`
+    (2023-12-05) converts Assertible result JSON to JUnit XML but is published by
+    an unaffiliated maintainer (prmiguel) with no repository or homepage set.
+    The @assertible scope is not used. The npm packages owned by the Assertible
+    GitHub org (lambda-cloudwatch-slack, blog-loader,
+    marked-bootstrap-4-renderer) are internal tooling, not API clients.
+- registry: pypi
+  query: assertible
+  result: 404 — no package named assertible.
+- registry: rubygems
+  query: assertible
+  result: No Assertible-published gem.
+- registry: crates.io
+  query: assertible
+  result: No Assertible-published crate.
+- registry: packagist
+  query: assertible
+  result: No Assertible-published package.
+- registry: hackage
+  query: assertible
+  result: >-
+    404. Assertible's backend is Haskell and the org publishes Haskell libraries
+    on GitHub (vcr, json-schema, assertible-crypto, postgresql-simple-migration),
+    but none is an API client and none is a first-party SDK for the Assertible
+    API.
+packages: []
+first_party_examples:
+- name: assertible/deployments
+  kind: example
+  official: true
+  registry: null
+  version: null
+  published: null
+  repository: https://github.com/assertible/deployments
+  description: >-
+    Configurations for GitHub post-deployment testing with Assertible via CI.
+    Referenced directly from Assertible's automation docs.
+  last_pushed: '2017-05-06'
+  note: >-
+    Not a package. No registry to query, so version and published are null by
+    fact rather than by omission.
+- name: assertible/nodejs-example
+  kind: example
+  official: true
+  registry: null
+  version: null
+  published: null
+  repository: https://github.com/assertible/nodejs-example
+  description: Continuous testing pipeline with Node.js, Heroku and Assertible.
+  last_pushed: '2018-09-13'
+- name: assertible/python-example
+  kind: example
+  official: true
+  registry: null
+  version: null
+  published: null
+  repository: https://github.com/assertible/python-example
+  description: API integration testing example using Assertible on Travis CI.
+  last_pushed: '2017-06-02'
+- name: assertible/ruby-example
+  kind: example
+  official: true
+  registry: null
+  version: null
+  published: null
+  repository: https://github.com/assertible/ruby-example
+  description: >-
+    Post-deployment testing example in Ruby using Codeship, Heroku and
+    Assertible.
+  last_pushed: '2025-05-09'
+- name: assertible/go-heroku-example
+  kind: example
+  official: true
+  registry: null
+  version: null
+  published: null
+  repository: https://github.com/assertible/go-heroku-example
+  description: >-
+    Automated smoke-testing pipeline with Go, Heroku Review Apps and Assertible.
+  last_pushed: '2019-11-02'
+third_party:
+- name: assertible-to-junit
+  official: false
+  registry: npm
+  version: 1.0.0
+  published: '2023-12-05'
+  url: https://www.npmjs.com/package/assertible-to-junit
+  description: Converts Assertible results JSON into JUnit XML.
+  note: >-
+    Community package. Maintainer prmiguel; no repository, homepage or
+    Assertible affiliation declared.
+decay_signal:
+  detail: >-
+    Every first-party example repository was last pushed between 2017 and 2019,
+    except ruby-example and oauth2-token-app which received a touch in May 2025.
+    There is no dated SDK release to compare against the API, because there is no
+    SDK.
+  checked: '2026-09-04'

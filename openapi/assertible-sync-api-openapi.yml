@@ -1,0 +1,118 @@
+openapi: 3.1.0
+info:
+  title: Assertible Sync API
+  version: '1.0'
+  description: |
+    The Sync API re-imports an OpenAPI, Swagger or Postman collection that was
+    previously imported into an Assertible web service from a URL, creating or
+    updating the tests derived from that specification. It is the command-line
+    and CI equivalent of the "Sync" button on a web service's Imports tab.
+  contact:
+    name: Assertible
+    url: https://assertible.com/contact
+  termsOfService: https://assertible.com/termsofservice
+x-generated-from: documentation
+x-generated-by: API Evangelist enrichment pipeline (local-v3)
+x-source-url: https://assertible.com/docs/guide/sync
+x-evidence:
+  fetched: '2026-09-04'
+  probe: POST https://assertible.com/imports/00000000-0000-0000-0000-000000000000/sync
+  http_status: 401
+  body: '{"code":"AuthenticationError","message":"Not logged in"}'
+  note: >-
+    Path, method, auth scheme and the single documented parameter are transcribed
+    verbatim from Assertible's published "Sync API" section and its published curl
+    example. The endpoint was probed unauthenticated on 2026-09-04 and returned
+    401 AuthenticationError, confirming it is live. Assertible publishes no
+    machine-readable spec for this surface.
+servers:
+- url: https://assertible.com
+  description: Assertible production API
+tags:
+- name: Sync
+  description: Re-import tests from an OpenAPI, Swagger or Postman specification
+paths:
+  /imports/{importId}/sync:
+    post:
+      tags:
+      - Sync
+      operationId: syncImportTests
+      summary: Sync tests from a previously imported specification
+      description: |
+        Re-fetches the specification behind an existing import and creates or
+        updates the corresponding Assertible tests. Responds with the number of
+        tests imported or synced.
+      security:
+      - basicAuth: []
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        description: >-
+          The import id, listed on the Imports tab of a web service's Settings page.
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyncRequest'
+            examples:
+              subsetOfTests:
+                summary: Sync only a subset of tests
+                value:
+                  tests:
+                  - 123e4567-e89b-12d3-a456-426655440000
+      responses:
+        '200':
+          description: Sync completed; responds with the number of tests imported or synced.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized — missing or invalid sync token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                notLoggedIn:
+                  value:
+                    code: AuthenticationError
+                    message: Not logged in
+        '404':
+          description: Import not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    SyncRequest:
+      type: object
+      properties:
+        tests:
+          type: array
+          description: >-
+            Restrict the sync to a given list of test ids. A test id is found on
+            the test's Settings tab, under its trigger URL.
+          items:
+            type: string
+            format: uuid
+    Error:
+      type: object
+      description: The Assertible error envelope.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |
+        HTTP Basic auth where the username is the Assertible sync token
+        (`ASSERTIBLE_SYNC_TOKEN`) and the password is left empty.

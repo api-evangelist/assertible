@@ -1,0 +1,198 @@
+generated: '2026-09-04'
+method: derived
+source: >-
+  openapi/assertible-deployments-api-openapi.yml,
+  openapi/assertible-triggers-api-openapi.yml,
+  openapi/assertible-sync-api-openapi.yml,
+  https://assertible.com/docs/guide/web-services
+provider: Assertible
+providerId: assertible
+description: >-
+  Entity graph for Assertible, derived from the request/response schemas of the
+  three documented API operations and from the object vocabulary of the user
+  guide. Only entities the documentation names are included; no field is listed
+  that is not either in a spec in this repo or in a published parameter table.
+identifier_conventions:
+  format: UUID v4
+  applies_to:
+  - web service (api) id
+  - test id
+  - deployment id
+  note: >-
+    `runId` is returned as an opaque string and is not documented as a UUID.
+    `importId` format is not documented. Test groups and environments are
+    referenced by name, not by id.
+entities:
+- name: WebService
+  aka:
+  - api
+  - service
+  description: >-
+    The core building block: a real-world API or website that Assertible models,
+    owns tests, environments, integrations and schedules for.
+  id_field: serviceId
+  fields:
+  - name: id
+    type: uuid
+  - name: environments
+    type: array
+  source: https://assertible.com/docs/guide/web-services
+  api_reference:
+  - runWebServiceTests (path parameter serviceId)
+  - createDeployment (body field service)
+- name: Test
+  description: >-
+    A single HTTP request plus its assertions, belonging to one web service. One
+    test is created per method/endpoint of an imported spec.
+  id_field: id
+  fields:
+  - name: id
+    type: uuid
+  source: https://assertible.com/docs/guide/tests
+  api_reference:
+  - runWebServiceTests (body field tests[])
+  - createDeployment (body field tests[])
+  - syncImportTests (body field tests[])
+- name: TestGroup
+  description: A named grouping of tests, usable to scope a deployment-triggered run.
+  id_field: name
+  source: https://assertible.com/docs/guide/deployments
+  api_reference:
+  - createDeployment (body field testGroups[])
+- name: Environment
+  description: >-
+    A named configuration (URL and HTTP settings) a web service's tests run
+    against. A transient environment is one identified by URL at call time
+    rather than pre-configured.
+  id_field: name
+  fields:
+  - name: name
+    type: string
+  - name: url
+    type: string
+  source: https://assertible.com/docs/guide/web-services
+  api_reference:
+  - createDeployment (environment, environmentUrl)
+  - runWebServiceTests (environment, url)
+- name: Deployment
+  description: >-
+    A record that a version of a web service was deployed to an environment,
+    which triggers the deployment-targeted tests.
+  id_field: id
+  natural_key:
+  - service
+  - environment
+  - version
+  fields:
+  - name: id
+    type: uuid
+  - name: runId
+    type: string
+    nullable: true
+  - name: testRun
+    type: object
+    nullable: true
+  - name: version
+    type: string
+  - name: ref
+    type: string
+    description: Full SHA1 commit hash; required when github is true.
+  - name: url
+    type: string
+  - name: github
+    type: boolean
+  - name: repository
+    type: string
+  source: openapi/assertible-deployments-api-openapi.yml
+- name: TestRun
+  description: >-
+    One execution of a set of tests for a web service in an environment. Returned
+    inline by the deployments API and by a trigger URL when wait is true.
+  id_field: runId
+  fields:
+  - name: status
+    type: string
+    example: TestRunPending
+  source: openapi/assertible-deployments-api-openapi.yml
+- name: Import
+  description: >-
+    A saved reference to an OpenAPI, Swagger or Postman specification a web
+    service's tests were created from, listed on the service's Imports tab and
+    re-runnable via the sync API.
+  id_field: importId
+  source: https://assertible.com/docs/guide/sync
+  api_reference:
+  - syncImportTests (path parameter importId)
+- name: Hook
+  description: >-
+    An email alert configuration on a web service (when to send, where to send,
+    and which trigger vias — Deployments, Schedules, Trigger URL, Dashboard —
+    it applies to).
+  source: https://assertible.com/docs/guide/automation#hooks
+  api_reference: []
+  note: No public API operation. Dashboard-configured only.
+- name: Schedule
+  description: >-
+    A recurring monitoring run for a web service. Frequencies are once per
+    minute, 5, 15 or 30 minutes, hourly or daily; sub-30-minute frequencies are
+    paid plans only.
+  source: https://assertible.com/docs/guide/automation#schedules
+  api_reference: []
+  note: No public API operation. Dashboard-configured only.
+- name: Organization
+  description: A team container that owns web services and holds member seats.
+  source: https://assertible.com/docs/guide/organizations
+  api_reference: []
+relationships:
+- from: Organization
+  to: WebService
+  type: has_many
+  via: ownership
+- from: WebService
+  to: Test
+  type: has_many
+  via: service
+- from: WebService
+  to: Environment
+  type: has_many
+  via: name
+- from: WebService
+  to: Import
+  type: has_many
+  via: Imports tab
+- from: WebService
+  to: Deployment
+  type: has_many
+  via: service
+- from: WebService
+  to: Schedule
+  type: has_many
+- from: WebService
+  to: Hook
+  type: has_many
+- from: Deployment
+  to: TestRun
+  type: has_one
+  via: runId
+- from: Deployment
+  to: Environment
+  type: belongs_to
+  via: environment
+- from: TestRun
+  to: Test
+  type: has_many
+  via: tests[]
+- from: Test
+  to: TestGroup
+  type: has_many
+  via: testGroups[]
+- from: Import
+  to: Test
+  type: has_many
+  via: deterministic key (METHOD/ENDPOINT or operationId; Postman Item id)
+gaps:
+- >-
+  There is no public read API. WebService, Test, Environment, Import, Hook,
+  Schedule and Organization can only be created, listed or edited in the
+  dashboard, so an agent cannot discover the ids it needs for any of the three
+  write operations — every id must be copied out of the UI by a human first.

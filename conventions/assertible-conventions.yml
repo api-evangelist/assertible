@@ -1,0 +1,158 @@
+generated: '2026-09-04'
+method: searched
+source: https://assertible.com/docs/guide/deployments
+docs:
+- https://assertible.com/docs/guide/deployments
+- https://assertible.com/docs/guide/automation
+- https://assertible.com/docs/guide/sync
+- https://assertible.com/plans
+provider: Assertible
+providerId: assertible
+description: >-
+  Cross-cutting runtime semantics of the Assertible API, read from Assertible's
+  own user guide and confirmed against live unauthenticated probes on 2026-09-04.
+  Assertible's public API is small and deliberately CI-shaped: three POST
+  operations on assertible.com, all HTTP Basic, all JSON.
+
+surface:
+  host: https://assertible.com
+  operations:
+  - createDeployment (POST /deployments)
+  - runWebServiceTests (POST /apis/{serviceId}/run)
+  - syncImportTests (POST /imports/{importId}/sync)
+  note: >-
+    api.assertible.com does not resolve (NXDOMAIN, checked 2026-09-04). Every
+    published curl example uses https://assertible.com. Assertible's own
+    /docs/api page reads "Our api is under construction right now", so the
+    three operations above are the whole documented programmatic surface.
+
+auth:
+  style: http-basic
+  detail: token as username, empty password
+  alternate: api_token query parameter on trigger URLs only
+  see: authentication/assertible-authentication.yml
+
+idempotency:
+  coverage: partial
+  scope:
+  - createDeployment
+  - syncImportTests
+  mechanism: natural-key-upsert
+  header: null
+  retention: null
+  documented: https://assertible.com/docs/guide/deployments
+  detail: >-
+    Assertible publishes no client-supplied idempotency key. Replay safety comes
+    from natural keys the caller already controls. For POST /deployments the docs
+    state: "If the POST request is made twice, the deployment is updated. A
+    unique deployment is represented by the service, environment name, and
+    version combination." For POST /imports/{importId}/sync, each unique
+    METHOD/ENDPOINT (or operationId) for OpenAPI/Swagger imports, and each
+    Postman collection Item id, is a deterministic key, so a repeated sync
+    updates the same tests rather than duplicating them.
+  why_partial: >-
+    Two of the three documented write operations carry a documented deterministic
+    key. POST /apis/{serviceId}/run has none — a repeated call starts an
+    additional test run — and it is the operation an agent is most likely to
+    retry on a timeout. Coverage is also mechanism-limited: because the caller
+    cannot mint a key, two DIFFERENT deployments that share a service,
+    environment and version collapse into one record, and a retry that changes an
+    optional field (ref, url) silently mutates the earlier deployment.
+
+reversibility:
+  grade: none
+  applicable: true
+  detail: >-
+    Assertible documents no reversal operation for any of its three write
+    operations — no cancel, stop, delete, undo or rollback for a deployment
+    record or a running test run, and no stated window. The one deletion path in
+    the product (removing the GitHub Deployments integration) is documented as a
+    dashboard action only, not an API call.
+  surfaces:
+  - operation: createDeployment
+    reversal: none
+    window: null
+    note: >-
+      A repeat POST with the same service/environment/version overwrites the
+      earlier record; that is an overwrite, not a reversal.
+  - operation: runWebServiceTests
+    reversal: none
+    window: null
+    note: >-
+      No documented way to cancel an in-flight run. Blast radius is bounded —
+      the run issues HTTP requests against the caller's own registered web
+      service — but those requests are real and are not undoable.
+  - operation: syncImportTests
+    reversal: none
+    window: null
+    note: >-
+      Sync creates or updates tests from the specification. Assertible documents
+      no way to revert a sync to the previous test configuration.
+  source: https://assertible.com/docs/guide/deployments
+
+dry_run_mode:
+  supported: false
+  detail: >-
+    No documented dry-run, preview or validate-only mode on any operation. The
+    closest published affordance is scoping a run with `tests` or `testGroups`
+    to limit what executes.
+
+pagination:
+  style: none
+  detail: >-
+    The documented API has no list or read operations, so there is nothing to
+    paginate. All three operations are single-resource POSTs.
+
+versioning:
+  style: unversioned-paths
+  detail: >-
+    No version segment, no version header, no media-type versioning. Paths are
+    /deployments, /apis/{id}/run and /imports/{id}/sync.
+  see: lifecycle/assertible-lifecycle.yml
+
+error_envelope:
+  shape: '{"code": "<MachineCode>", "message": "<human text>"}'
+  content_type: application/json
+  rfc9457: false
+  observed:
+  - status: 401
+    body: '{"code":"AuthenticationError","message":"Not logged in"}'
+    probed: '2026-09-04'
+  - status: 404
+    body: '{"code":"NotFoundError","message":"Not Found"}'
+    probed: '2026-09-04'
+  see: errors/assertible-problem-types.yml
+
+rate_limit_signaling:
+  headers: none
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After headers were present on live
+    responses probed 2026-09-04, and Assertible's own pricing FAQ states it does
+    not limit request counts: "Instead of limiting the number of requests you can
+    make, limits are placed on the number of results you can see for those
+    requests, the number of tests you can create, how frequently you can run
+    schedules, etc."
+  see: rate-limits/assertible-rate-limits.yml
+
+request_id_tracing:
+  supported: false
+  detail: >-
+    No request-id or correlation header documented or observed. The deployments
+    response returns an `id` (deployment) and `runId` (test run), which are the
+    only handles a caller gets back.
+
+metadata_and_expansion:
+  custom_metadata: false
+  field_expansion: false
+  sparse_fields: false
+  detail: >-
+    Deployment metadata is a fixed documented set (service, version, environment,
+    environmentUrl, ref, url, github, repository, tests, testGroups, wait). There
+    is no free-form metadata bag and no expansion or field-selection syntax.
+
+content_negotiation:
+  request: application/json body, or query-string parameters on trigger URLs
+  response: application/json
+  detail: >-
+    Trigger URLs accept the same parameters either in a JSON body or as query
+    parameters, which is the only documented content-negotiation behaviour.

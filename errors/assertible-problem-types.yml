@@ -1,0 +1,75 @@
+generated: '2026-09-04'
+method: probed
+source: live probes of https://assertible.com plus https://assertible.com/docs/guide/deployments
+provider: Assertible
+providerId: assertible
+format: custom-json
+rfc9457: false
+content_type: application/json
+envelope:
+  shape: '{"code": "<MachineCode>", "message": "<human text>"}'
+  fields:
+  - name: code
+    type: string
+    description: Machine-readable error code in PascalCase, suffixed "Error".
+  - name: message
+    type: string
+    description: Human-readable explanation; may contain embedded parser output.
+  note: >-
+    Assertible publishes no error-code reference page. The catalogue below is
+    every code this pipeline could evidence — two observed on live
+    unauthenticated probes, one published verbatim in Assertible's deployments
+    guide. It is deliberately not exhaustive; codes an authenticated caller can
+    reach were not enumerated because that requires an account.
+problem_types:
+- code: AuthenticationError
+  status: 401
+  title: Not logged in
+  detail: >-
+    The request carried no Assertible API token, or the token was not accepted.
+  remediation: >-
+    Send the token as the HTTP Basic username with an empty password
+    (curl -u $ASSERTIBLE_API_TOKEN:), or, on trigger URLs only, as the
+    api_token query parameter.
+  method: probed
+  evidence:
+    request: POST https://assertible.com/deployments
+    http_status: 401
+    body: '{"code":"AuthenticationError","message":"Not logged in"}'
+    probed: '2026-09-04'
+- code: NotFoundError
+  status: 404
+  title: Not Found
+  detail: The requested path or resource does not exist.
+  remediation: >-
+    Check the web service id, import id or path. Assertible returns this JSON
+    envelope for unknown site paths as well as unknown API resources.
+  method: probed
+  evidence:
+    request: GET https://assertible.com/openapi.json
+    http_status: 404
+    body: '{"code":"NotFoundError","message":"Not Found"}'
+    probed: '2026-09-04'
+- code: InvalidRequestError
+  status: 400
+  title: Cannot parse request body
+  detail: >-
+    The JSON body was missing a required key or could not be parsed. The message
+    embeds the underlying decoder error.
+  remediation: >-
+    Supply every required parameter. For POST /deployments, `service` and
+    `version` are both required.
+  method: searched
+  evidence:
+    source: https://assertible.com/docs/guide/deployments
+    published_example: |
+      {"code":"InvalidRequestError","message":"Cannot parse request body\n\"Error in $: key \\\"service\\\" not present\"\n"}
+gaps:
+- >-
+  No published error reference. Codes reachable only with a valid token (quota,
+  plan-limit, unknown environment, GitHub integration failures) are not
+  catalogued here because enumerating them would require an authenticated
+  account, and guessing them would be fabrication.
+- >-
+  Assertible does not use application/problem+json (RFC 9457). A client cannot
+  rely on `type`, `title`, `status` or `instance` members.

@@ -1,0 +1,31 @@
+generated: '2026-09-04'
+method: generated
+source: openapi/ in this repo plus https://assertible.com/docs
+provider: Assertible
+providerId: assertible
+description: >-
+  Packaged agent skills for the three documented Assertible API operations. Every
+  operationId referenced below exists in a spec in this repo. Assertible
+  publishes no skills, AGENTS.md or llms.txt of its own (probed 2026-09-04).
+skills:
+- name: assertible-deployment-test-gate
+  file: skills/assertible-deployment-test-gate.md
+  operations:
+  - createDeployment
+  spec: openapi/assertible-deployments-api-openapi.yml
+  summary: Record a deployment and gate the release on its test run.
+- name: assertible-trigger-test-run
+  file: skills/assertible-trigger-test-run.md
+  operations:
+  - runWebServiceTests
+  spec: openapi/assertible-triggers-api-openapi.yml
+  summary: Run a web service's tests on demand against a named or transient environment.
+- name: assertible-sync-spec-tests
+  file: skills/assertible-sync-spec-tests.md
+  operations:
+  - syncImportTests
+  spec: openapi/assertible-sync-api-openapi.yml
+  summary: Re-import a spec so the test suite tracks it.
+coverage:
+  operations_total: 3
+  operations_covered: 3

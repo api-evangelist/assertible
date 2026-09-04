@@ -3,90 +3,97 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Assertible
 providerId: assertible
+generated: '2026-09-04'
+method: searched
+source: https://assertible.com/plans
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-04'
+# 2026-09-04: this file previously held a bulk-sweep SCAFFOLD asserting
+# X-RateLimit-* response headers, a 429 on exhaustion and per-tier
+# requests-per-minute ceilings. NONE of that is published by Assertible and no
+# such header was observed on a live response. The scaffold has been replaced
+# with what Assertible actually publishes and what was actually observed.
 tags:
   - API Testing
   - Monitoring
-  - Quality Assurance
-  - Testing
-  - CI/CD
   - Rate Limiting
   - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Assertible API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+description: >-
+  Assertible publishes no request-rate limit for its API and returns no
+  rate-limit response headers. Its published position is that request counts are
+  not capped; capacity is limited by plan on product resources (web services,
+  tests, retained results, members, schedule frequency) instead.
+limit_count: 0
+limit_count_note: >-
+  Zero is a measured result, not a gap. Assertible states on its pricing page:
+  "Do you have request limits per month? Instead of limiting the number of
+  requests you can make, limits are placed on the number of results you can see
+  for those requests, the number of tests you can create, how frequently you can
+  run schedules, etc."
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  observed: []
+  probed: '2026-09-04'
+  probe_detail: >-
+    POST https://assertible.com/deployments and
+    POST https://assertible.com/apis/{uuid}/run, both unauthenticated, returned
+    401 with headers Content-Type, Date, Server, Content-Length, Connection and
+    (on the trigger URL) Set-Cookie. No RateLimit-*, X-RateLimit-* or
+    Retry-After header was present.
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Assertible API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Assertible API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Assertible API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Assertible API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Assertible API
+  throttled: null
+  quotaExceeded: null
+  note: >-
+    No throttling status code is documented. Do not assume 429; it was neither
+    published nor observed.
+limits: []
+capacity_limits:
+  note: >-
+    These are the plan-scoped product limits Assertible does publish. They are
+    not request-rate limits and are recorded here so a consumer can see what
+    actually constrains usage. Full detail in plans/assertible-plans-pricing.yml.
+  entries:
+    - scope: per-account
+      plan: Personal (free)
+      web_services: 2
+      tests_per_service: 10
+      retained_results: 1000
+      members: 2
+      schedule_frequency: 30 minutes / hourly / daily
+    - scope: per-account
+      plan: Standard
+      web_services: 25
+      tests_per_service: 500
+      retained_results: 5000
+      members: 1
+      schedule_frequency: down to once per minute
+    - scope: per-account
+      plan: Startup
+      web_services: 25
+      tests_per_service: 500
+      retained_results: 5000
+      members: 10
+      schedule_frequency: down to once per minute
+    - scope: per-account
+      plan: Business
+      web_services: 50
+      tests_per_service: 1000
+      retained_results: 10000
+      members: 20
+      schedule_frequency: down to once per minute
+  source:
+    - https://assertible.com/plans
+    - https://assertible.com/docs/guide/automation#schedules
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Fair use
+    description: >-
+      Not published. Assertible documents no fair-use clause for API request
+      volume.
+    published: false
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

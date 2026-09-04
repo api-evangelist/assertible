@@ -1,0 +1,75 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/ in this repo
+provider: Assertible
+providerId: assertible
+status: candidate
+description: >-
+  Assertible ships NO MCP server. No hosted endpoint, no stdio package, no
+  mention of MCP anywhere on assertible.com, and no first- or third-party server
+  found on npm or GitHub (searched 2026-09-04). The tools below are a CANDIDATE
+  set derived from the three documented API operations in this repo. They are a
+  proposal, not a product, and this manifest is wired into apis.yml as
+  X-MCPServerCandidate rather than MCPServer so it is never read as a shipped
+  agent surface.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+  note: >-
+    auth records what a server would need (HTTP Basic with the Assertible API
+    token as username), not an auth mode of any server that exists.
+search_evidence:
+- query: site docs for "MCP" / "Model Context Protocol"
+  result: not mentioned
+  source: https://assertible.com/docs
+- query: npm "assertible mcp"
+  result: no matching package
+  checked: '2026-09-04'
+- query: github repositories "assertible mcp"
+  result: >-
+    34 results, none for this company; all are MCP-server testing tools that
+    happen to match on the word "assert".
+  checked: '2026-09-04'
+tools:
+- name: create_deployment
+  description: >-
+    Record a deployment of a web service and trigger its deployment-targeted
+    tests.
+  backing_operation: createDeployment
+  backing_spec: openapi/assertible-deployments-api-openapi.yml
+  input_schema_source: '#/components/schemas/DeploymentRequest'
+  consequence: write
+  reversible: false
+- name: run_web_service_tests
+  description: >-
+    Run the tests for an Assertible web service, optionally scoped to an
+    environment, endpoint, URL or list of test ids.
+  backing_operation: runWebServiceTests
+  backing_spec: openapi/assertible-triggers-api-openapi.yml
+  input_schema_source: '#/components/schemas/TriggerRunRequest'
+  consequence: side-effecting
+  consequence_note: >-
+    Issues real HTTP requests against the caller's registered web service. Not
+    reversible and not cancellable.
+  reversible: false
+- name: sync_import_tests
+  description: >-
+    Re-import an OpenAPI, Swagger or Postman specification and create or update
+    the tests derived from it.
+  backing_operation: syncImportTests
+  backing_spec: openapi/assertible-sync-api-openapi.yml
+  input_schema_source: '#/components/schemas/SyncRequest'
+  consequence: write
+  reversible: false
+blockers:
+- >-
+  A candidate server would be write-only. Assertible exposes no read operation,
+  so an agent could not list web services, tests, imports or environments, and
+  could not fetch a test result. Every id must come from a human reading the
+  dashboard.
+- >-
+  No cancel or undo on any of the three operations, and no dry-run.
