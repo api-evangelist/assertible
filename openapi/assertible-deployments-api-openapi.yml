@@ -8,9 +8,7 @@ info:
 
     deployment metadata (service, version, environment) and optionally wait
 
-    for the test run to finish before responding.
-
-    '
+    for the test run to finish before responding.'
   contact:
     name: Assertible
     url: https://assertible.com
@@ -30,9 +28,7 @@ paths:
 
         identified web service. Triggers any deployment-targeted tests and
 
-        records the deployment ref/version for traceability.
-
-        '
+        records the deployment ref/version for traceability.'
       security:
       - basicAuth: []
       requestBody:
@@ -52,6 +48,8 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
+      operationId: postDeployments
+      x-operation-id-source: derived
 components:
   schemas:
     DeploymentResponse:
