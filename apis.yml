@@ -64,7 +64,6 @@ apis:
     and listed in the dashboard only. Assertible's own /docs/api page states the
     broader API is "under construction".
   humanURL: https://assertible.com/
-  baseURL: https://assertible.com
   tags:
   - API Testing
   - Monitoring
@@ -90,7 +89,6 @@ apis:
   name: Assertible Deployments API
   description: Notify Assertible of deployments and trigger tests
   humanURL: https://assertible.com/
-  baseURL: https://assertible.com
   tags:
   - Deployment
   tags_raw:

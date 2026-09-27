@@ -126,16 +126,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      description: The Assertible error envelope.
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
     TriggerRunRequest:
       type: object
       description: Trigger URL parameters, as documented in the Trigger URL Parameters table.
@@ -160,6 +150,16 @@ components:
           items:
             type: string
             format: uuid
+    Error:
+      type: object
+      description: The Assertible error envelope.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
   securitySchemes:
     basicAuth:
       type: http

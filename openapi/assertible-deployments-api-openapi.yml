@@ -52,18 +52,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DeploymentResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Deployment ID
-        runId:
-          type: string
-          description: Run ID
-        testRun:
-          type: object
-          description: Status of the triggered test run
     DeploymentRequest:
       type: object
       required:
@@ -112,6 +100,18 @@ components:
         wait:
           type: boolean
           description: Wait for the test run to finish before responding
+    DeploymentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Deployment ID
+        runId:
+          type: string
+          description: Run ID
+        testRun:
+          type: object
+          description: Status of the triggered test run
   securitySchemes:
     basicAuth:
       type: http
