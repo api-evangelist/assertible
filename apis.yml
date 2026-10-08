@@ -102,6 +102,10 @@ apis:
     url: https://assertible.com/docs/guide/deployments
     title: Tracking deployments
 common:
+  - type: RateLimits
+    url: rate-limits/assertible-rate-limits.yml
+  - type: FinOps
+    url: finops/assertible-finops.yml
   - type: Website
     url: https://assertible.com/
   - type: AgenticAccess
