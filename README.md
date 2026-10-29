@@ -1,4 +1,4 @@
-# Assertible (assertible)
+# Assertible
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,62 +66,139 @@
 
 Assertible provides a reliable first line of defense against web service failures by providing simple and powerful assertions to test and monitor APIs. It enables automated API testing with assertions on response status, headers, body content, and performance, with integrations for CI/CD pipelines and notifications. Assertible supports scheduled API monitoring, deployment testing triggered via webhooks, and team collaboration for API quality assurance workflows. The platform integrates with GitHub, Slack, PagerDuty, and other tools for seamless notification and incident management.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/assertible/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/assertible/refs/heads/main/apis.yml)
+**Areas:** API Testing · Monitoring · Quality Assurance · Testing · CI/CD · Developer Tools
 
-## Scope
+## Assertible on APIs.io
 
-- **Type:** Index
+Everything profiled for Assertible is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/assertible/](https://apis.io/providers/assertible/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (2)
 
-- API Testing
-- Monitoring
-- Quality Assurance
-- Testing
-- CI/CD
+- [Assertible API](https://apis.io/apis/assertible/assertible-api/) — Assertible's public programmatic surface, used to drive test runs from a CI/CD pipeline. It consists of two documented POST operations on assertible.com: a…
+- [Assertible Deployments API](https://apis.io/apis/assertible/assertible-deployments-api/) — Notify Assertible of deployments and trigger tests
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-08
-- **Modified:** 2026-04-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Assertible API
+Model Context Protocol servers that expose the API to agents.
 
-The Assertible API enables programmatic management of API tests, test suites, and monitoring configurations for automated quality assurance. It allows triggering test runs, managing webhooks, and accessing test results programmatically for CI/CD integration.
+- [assertible-mcp.yml](https://apis.io/servers/assertible/assertible-mcp-yml/)
 
-- **Human URL:** [https://assertible.com/](https://assertible.com/)
-- **Base URL:** `https://api.assertible.com`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- API Testing
-- Monitoring
-- Quality Assurance
+- [Assertible Agentic Access](https://apis.io/agentic-access/assertible/assertible-agentic-access/)
 
-#### Properties
+#### Collections (2)
 
+Postman and Open Collection request collections.
+
+- [Assertible API](https://apis.io/collections/assertible/open-assertible/)
+- [Assertible Deployments API](https://apis.io/collections/assertible/open-assertible-deployments-api/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Assertible Deployments Api Overlay](https://apis.io/overlays/assertible/assertible-deployments-api-overlay/)
+- [Assertible Sync Api Overlay](https://apis.io/overlays/assertible/assertible-sync-api-overlay/)
+- [Assertible Triggers Api Overlay](https://apis.io/overlays/assertible/assertible-triggers-api-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Assertible Authentication](https://apis.io/security/assertible/assertible-authentication/)
+- [Assertible Domain Security](https://apis.io/security/assertible/assertible-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Assertible Plans Pricing](https://apis.io/plans/assertible/assertible-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Assertible Rate Limits](https://apis.io/rate-limits/assertible/assertible-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Assertible Finops](https://apis.io/finops/assertible/assertible-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://assertible.com/)
 - [Documentation](https://assertible.com/docs)
-- [Getting Started](https://assertible.com/docs/guide/getting-started)
-- [Authentication](https://assertible.com/docs/guide/authentication)
-- [Postman Collection](collections/assertible.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/assertible.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/assertible)
-- [Portal](https://assertible.com/)
-- [Documentation](https://assertible.com/docs)
+- [Pricing](https://assertible.com/plans)
+- [Sign up](https://assertible.com/signup)
+- [Support](https://assertible.com/contact)
 - [Blog](https://assertible.com/blog)
-- [Sign Up](https://assertible.com/signup)
-- [Login](https://assertible.com/login)
-- [GitHub Organization](https://github.com/assertible)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
+- [Terms of service](https://assertible.com/termsofservice)
+- [Privacy policy](https://assertible.com/privacypolicy)
+- [GitHub](https://github.com/assertible)
+- [Status](http://status.assertible.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 46.7** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 27.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 76.3 |
+
+**Agent readiness 34.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/assertible/](https://apis.io/providers/assertible/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Assertible: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/assertible/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
