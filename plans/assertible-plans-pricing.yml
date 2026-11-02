@@ -1,0 +1,99 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://assertible.com/plans
+sources:
+- https://assertible.com/plans
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T161713
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: Standard
+published: true
+note: Tiered monthly plans with free tier; 1 month free trial on paid plans; no per-user fees.
+plan_count: 4
+currency: USD
+plans:
+- name: Personal
+  price_text: $ 0 /month
+  price: 0
+  currency: USD
+  period: month
+  unit: account
+  included_quota: 2 web services, 10 tests per service, 1,000 result retention, 1-2 members, Standard
+    (2 monitors) schedule frequency
+- name: Standard
+  price_text: $ 25 /month
+  price: 25
+  currency: USD
+  period: month
+  unit: account
+  included_quota: 25 web services, 500 tests per service, 5,000 result retention, 1 member, Upgraded schedule
+    frequency
+- name: Startup
+  price_text: $ 50 /month
+  price: 50
+  currency: USD
+  period: month
+  unit: account
+  included_quota: 25 web services, 500 tests per service, 5,000 result retention, 10 members, Upgraded
+    schedule frequency
+- name: Business
+  price_text: $ 100 /month
+  price: 100
+  currency: USD
+  period: month
+  unit: account
+  included_quota: 50 web services, 1,000 tests per service, 10,000 result retention, 20 members, Upgraded
+    schedule frequency
+rate_limit_statements:
+- Instead of limiting the number of requests you can make, limits are placed on the number of results
+  you can see for those requests, the number of tests you can create, how frequently you can run schedules,
+  etc.
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  units:
+  - object
+  plans:
+  - name: Personal
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Standard
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Startup
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Business
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
